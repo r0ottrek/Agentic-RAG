@@ -1,0 +1,13 @@
+name: eval
+on: [push, pull_request]
+
+jobs:
+  retrieval-recall:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync
+      - run: uv run python eval/ci_check.py
