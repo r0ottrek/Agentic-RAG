@@ -1,10 +1,11 @@
 from google import genai
 from google.genai import types
 from config import GEMINI_API_KEY, GEN_MODEL
+from langfuse import observe
 
 _client = genai.Client(api_key=GEMINI_API_KEY)
 
-
+@observe(as_type="generation")
 def generate(prompt: str, temperature: float = 0.0) -> str:
     """All model calls go through here. temperature=0 = deterministic (vital for eval)."""
     resp = _client.models.generate_content(

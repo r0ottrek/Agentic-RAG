@@ -82,6 +82,8 @@ def main():
                                "correctness": avg_corr}, "items": results}, f, indent=2)
     print(f"\nSaved {path}")
 
+    from langfuse import get_client
+    get_client().flush()
 
 if __name__ == "__main__":
     main()

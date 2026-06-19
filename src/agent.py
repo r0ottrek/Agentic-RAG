@@ -4,7 +4,7 @@ from langgraph.graph import StateGraph, START, END
 from config import TOP_K, MAX_RETRIES
 from retrieval import retrieve as retrieve_chunks
 from llm import answer, chat, decide_retrieve, grade_context, rewrite_query
-
+from langfuse import observe
 
 class State(TypedDict):
     question: str   # the original user question (never changes)
@@ -85,6 +85,7 @@ def build_agent():
 _agent = build_agent()
 
 
+@observe()
 def run(question: str) -> dict:
     return _agent.invoke({
         "question": question,
