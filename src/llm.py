@@ -52,11 +52,14 @@ def chat(question: str) -> str:
 
 def decide_retrieve(question: str) -> bool:
     prompt = (
-        "Does answering this question require looking up Ryder's notes, blog, or projects? "
+        "You route messages for a chatbot about Ryder (his projects, blog, homelab, skills). "
+        "Reply NO only for pure greetings or small talk (e.g. 'hi', 'how are you', 'thanks'). "
+        "For ANY actual question — even general-sounding ones — reply YES so it can use Ryder's notes. "
         "Answer only YES or NO.\n\n"
-        f"Question: {question}"
+        f"Message: {question}"
     )
     return generate(prompt).strip().lower().startswith("y")
+
 
 
 def grade_context(question: str, chunks: list[dict]) -> bool:
