@@ -15,3 +15,6 @@ qdrant_data/
 
 # Corpus files - regenerated locally, never commit
 data/
+
+# Local copy of the website DB - PII + admin hash, NEVER commit
+roottrek.db
