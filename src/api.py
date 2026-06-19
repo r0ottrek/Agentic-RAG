@@ -7,7 +7,13 @@ from slowapi.util import get_remote_address
 
 from agent import run
 
-limiter = Limiter(key_func=get_remote_address)          # rate-limit per client IP
+
+def client_ip(request: Request) -> str:
+    # Real visitor IP when behind Cloudflare; falls back to socket addr locally.
+    return request.headers.get("CF-Connecting-IP") or get_remote_address(request)
+
+
+limiter = Limiter(key_func=client_ip)                   # rate-limit per real client IP
 
 app = FastAPI(title="Ask RootTrek")
 app.state.limiter = limiter
