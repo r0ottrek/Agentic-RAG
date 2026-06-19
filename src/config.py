@@ -15,3 +15,4 @@ GEN_MODEL = "gemini-2.5-flash"
 CHUNK_SIZE = 900
 CHUNK_OVERLAP = 150
 TOP_K = 5
+MAX_RETRIES = 2   # how many times the agent will rewrite the query and retry retrieval

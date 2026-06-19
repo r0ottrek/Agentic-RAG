@@ -1,16 +1,25 @@
 import sys
-from retrieval import retrieve
-from llm import answer
+from agent import run
 
 
 def main():
     question = " ".join(sys.argv[1:]) or input("Ask: ")
-    chunks = retrieve(question)
+    result = run(question)
+
+    print("\n--- AGENT STEPS ---")
+    for s in result["steps"]:
+        print(f"  - {s}")
+
     print("\n--- ANSWER ---")
-    print(answer(question, chunks))
-    print("\n--- SOURCES ---")
-    for c in chunks:
-        print(f"  {c['score']:.3f}  {c['source']}")
+    print(result["answer"])
+
+    if result["chunks"]:
+        print("\n--- SOURCES ---")
+        seen = set()
+        for c in result["chunks"]:
+            if c["source"] not in seen:
+                print(f"  {c['source']}")
+                seen.add(c["source"])
 
 
 if __name__ == "__main__":
